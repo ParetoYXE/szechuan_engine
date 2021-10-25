@@ -1,7 +1,7 @@
 # Simple pygame program
 
 # Import and initialize the pygame library
-import pygame, random, time, threading
+import pygame, random, time, threading, math
 pygame.init()
 
 # Set up the drawing window
@@ -18,6 +18,8 @@ w, h = pygame.display.get_surface().get_size()
 
 treeImage = pygame.image.load('Tree.png')
 playerImage = pygame.image.load('Npc.png')
+click_zoneImage = pygame.image.load('click_zone.png')
+
 
 
 
@@ -83,7 +85,7 @@ def mapRender():
 		for i in range(20):
 			if(map[mapRenderPos] == 1):
 				screen.blit(resizeImage,(renderX,renderY))
-			renderX+=tileDimension
+			renderX+=round(tileDimension)
 			mapRenderPos+=1
 			if(j == 7 and i == 10):
 				screen.blit(playerImageResize,(renderX,renderY))
@@ -91,9 +93,10 @@ def mapRender():
 				player['y'] = j
 			if(map[mapRenderPos] == 2):
 				screen.blit(playerImageResize,(renderX,renderY))
-				localMobs.append({'mood':random.randint(1,3),'location':mapRenderPos,'x':i,'y':j})
+				localMobs.append({'mood':random.randint(1,3),'location':mapRenderPos,'x':i + 1,'y':j})
 		renderX = 0
-		renderY+=tileDimension
+		renderY+=round(tileDimension)
+
 
 
 		
@@ -106,15 +109,22 @@ def playerInteraction():
 		
 def combat(pos):
 	tileDimension = w / 30
-	x = round(pos[0] / tileDimension)
-	y = round(pos[1] / tileDimension)
-	
+	x = math.floor(pos[0] / tileDimension)
+	y = math.floor(pos[1] / tileDimension)
 
+	print('Click location')
+	print('X:'+str(x))
+	print('Y:'+str(y))
+
+
+	click_zoneImageResize = pygame.transform.scale(click_zoneImage,(round(tileDimension),round(tileDimension)))
+	screen.blit(click_zoneImageResize,(x*tileDimension,y*tileDimension))
+
+	print(localMobs)
 	for i in localMobs:
-		if(i['x'] + 1 == x or i['x'] - 1):
-			if(i['y']+1 == y or i['y'] - 1):
-				print('hit')
-	
+		if(i['x'] == x   and i['y'] == y):
+			print('hit')
+
 	
 		
 def npcAI():
@@ -160,6 +170,8 @@ npcAI()
 
 
 aiTimer = 0
+combatCheck = False
+pos = [0,0]
 
 while running:
 
@@ -180,7 +192,7 @@ while running:
 				running = False
 		elif event.type == pygame.MOUSEBUTTONUP:
 			pos = pygame.mouse.get_pos()
-			combat(pos)
+			combatCheck = True
 
 			
 	# Fill the background with white
@@ -194,6 +206,9 @@ while running:
 	
 	mapRender()
 	renderStats()
+	if(combatCheck):
+		combat(pos)
+		combatCheck = False
     # Flip the display
 	pygame.display.flip()
 	
