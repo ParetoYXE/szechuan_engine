@@ -7,16 +7,76 @@ pygame.init()
 # Set up the drawing window
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-map = [0]*10000
+
+
+#50*50=2500
+mapTotalSize = 2500
+worldDimension = 50
+
+
+map = [		 
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8,9,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			]
+
+
 localMobs = []
-
-
-
 
 w, h = pygame.display.get_surface().get_size()
 
 
 treeImage = pygame.image.load('Tree.png')
+waterImage = pygame.image.load('water.png')
 playerImage = pygame.image.load('Npc.png')
 click_zoneImage = pygame.image.load('click_zone.png')
 
@@ -26,7 +86,7 @@ click_zoneImage = pygame.image.load('click_zone.png')
 # Run until the user asks to quit
 running = True
 
-playerMapPos = random.randint(0,10000)
+playerMapPos = 0
 
 playerStats = {'HealthPoints':0,'Stamina':0,'Food':0,'Sleep':0,'Shekels':0, 'Strength':0,'Agility':0,'Dexterity':0,'Intelligence':0}
 player = {'x':0,'y':0}
@@ -50,10 +110,14 @@ def renderStats():
 	xStart = tileDimension * 20
 	yStart = tileDimension * 1
 	
+	font = pygame.font.SysFont("System", 50)
+	color = (0,60,20)
+
+	pygame.draw.rect(screen, (0,0,0), pygame.Rect(xStart,0, tileDimension*10, tileDimension*20))
 	
+	xStart+=tileDimension
+
 	for i in playerStats:
-		font = pygame.font.SysFont("System", 40)
-		color = (0,60,20)
 		if(i == 'Strength'):
 			yStart+=tileDimension * 4
 		text_surface = font.render(i+': '+str(playerStats[i]), False, color)
@@ -63,40 +127,49 @@ def renderStats():
 		
 
 def mapGenerate():
-	for i in range(10000):
-		map[i] = random.randint(0,1)
-		if(random.randint(0,1000) == 69 or random.randint(0,1000) == 420):
-			map[i] = 2
+	global playerMapPos
+	count = 0
+	for i in map: 
+		if i == 9:
+			playerMapPos = count
+		count+=1
 		
 		
 
 def mapRender():
 	global localMobs
 	tileDimension = w / 30
-	resizeImage = pygame.transform.scale(treeImage,(round(tileDimension),round(tileDimension)))
+	resizeImageWater = pygame.transform.scale(waterImage,(round(tileDimension),round(tileDimension)))
+	resizeImageTree = pygame.transform.scale(treeImage,(round(tileDimension),round(tileDimension)))
 	playerImageResize = pygame.transform.scale(playerImage,(round(tileDimension),round(tileDimension)))
 	
 	renderX = 0
 	renderY = 0
 	
 	localMobs = []
-	mapRenderPos = playerMapPos - 150
-	for j in range(15):
+	mapRenderPos = int(playerMapPos - (worldDimension*8) - (20 / 2))
+	mapRenderPosX = 0
+
+	print(playerMapPos)
+	print(mapRenderPos)
+	for j in range(17):
 		for i in range(20):
-			if(map[mapRenderPos] == 1):
-				screen.blit(resizeImage,(renderX,renderY))
-			renderX+=round(tileDimension)
-			mapRenderPos+=1
-			if(j == 7 and i == 10):
-				screen.blit(playerImageResize,(renderX,renderY))
-				player['x'] = i 
-				player['y'] = j
-			if(map[mapRenderPos] == 2):
+			if(map[mapRenderPos+mapRenderPosX] == 0):
+				screen.blit(resizeImageWater,(renderX,renderY))
+			if(map[mapRenderPos+mapRenderPosX] == 1):
+				screen.blit(resizeImageTree,(renderX,renderY))
+			if(map[mapRenderPos+mapRenderPosX] == 2):
 				screen.blit(playerImageResize,(renderX,renderY))
 				localMobs.append({'mood':random.randint(1,3),'location':mapRenderPos,'x':i + 1,'y':j})
+			renderX+=round(tileDimension)
+			mapRenderPosX+=1
+	
 		renderX = 0
+		mapRenderPosX = 0
+		mapRenderPos+=worldDimension
 		renderY+=round(tileDimension)
 
+	screen.blit(playerImageResize,(tileDimension*10,tileDimension*8))
 
 
 		
@@ -112,15 +185,18 @@ def combat(pos):
 	x = math.floor(pos[0] / tileDimension)
 	y = math.floor(pos[1] / tileDimension)
 
-	print('Click location')
-	print('X:'+str(x))
-	print('Y:'+str(y))
+
+
+
+	#print('Click location')
+	#print('X:'+str(x))
+	#print('Y:'+str(y))
 
 
 	click_zoneImageResize = pygame.transform.scale(click_zoneImage,(round(tileDimension),round(tileDimension)))
 	screen.blit(click_zoneImageResize,(x*tileDimension,y*tileDimension))
 
-	print(localMobs)
+	#print(localMobs)
 	for i in localMobs:
 		if(i['x'] == x   and i['y'] == y):
 			print('hit')
@@ -141,28 +217,25 @@ def npcAI():
 				map[i['location']+1] = 2
 				map[i['location']] = 0
 			elif(player['y']< i['y']):
-				map[i['location']-20] = 2
+				map[i['location']-worldDimension] = 2
 				map[i['location']] = 0
 			elif(player['y'] > i['y']):
-				map[i['location']+20] = 2
+				map[i['location']+worldDimension] = 2
 				map[i['location']] = 0
 		else:	
 			if movement == 0:
 				map[i['location']+1] = 2
 				map[i['location']] = 0
 			elif movement == 1:
-				map[i['location']+20] = 2
+				map[i['location']+worldDimension] = 2
 				map[i['location']] = 0
 			elif movement == 2:
 				map[i['location']-1] = 2
 				map[i['location']] = 0
 			elif movement == 3:
-				map[i['location']-20] = 2
+				map[i['location']-worldDimension] = 2
 				map[i['location']] = 0
 
-
-			
-			
 
 mapGenerate()
 statGeneration()
@@ -181,9 +254,9 @@ while running:
 			running = False
 		elif event.type == pygame.KEYDOWN:
 			if(event.key == pygame.K_w):
-				playerMapPos -= 20
+				playerMapPos -= worldDimension
 			if(event.key == pygame.K_s):
-				playerMapPos += 20
+				playerMapPos += worldDimension
 			if(event.key == pygame.K_d):
 				playerMapPos +=1
 			if(event.key == pygame.K_a):
@@ -196,7 +269,7 @@ while running:
 
 			
 	# Fill the background with white
-	screen.fill((255, 255, 255))
+	screen.fill((0,110,51))
 	if(aiTimer > 60):
 		aiTimer = 0
 		npcAI()
